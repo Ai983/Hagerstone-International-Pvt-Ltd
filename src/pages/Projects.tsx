@@ -1,68 +1,12 @@
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform, useInView } from "framer-motion";
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { X, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+
 import { Building, Home, Hotel, Factory, Store, MapPin, Calendar } from "lucide-react";
-
-// Premium easing functions
-const YODEZEEN_EASING = [0.22, 1, 0.36, 1] as const;
-const EASE_OUT_QUART = [0.25, 1, 0.5, 1] as const;
-
-// Animation variants
-const heroVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.25,
-      delay: i * 0.06,
-      ease: YODEZEEN_EASING,
-    },
-  }),
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.22,
-      delay: Math.floor(i / 4) * 0.08 + (i % 4) * 0.06,
-      ease: YODEZEEN_EASING,
-    },
-  }),
-};
-
-const ctaVariants = {
-  hidden: { opacity: 0, scale: 0.98 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      duration: 0.22,
-      ease: YODEZEEN_EASING,
-    },
-  },
-};
 
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [isFilterSticky, setIsFilterSticky] = useState(false);
-  
-  const heroRef = useRef<HTMLElement>(null);
-  const filterRef = useRef<HTMLElement>(null);
-  const ctaRef = useRef<HTMLElement>(null);
-  
-  const { scrollY } = useScroll();
-  const heroParallax = useTransform(scrollY, [0, 500], ["0%", "8%"]);
-  
-  const ctaInView = useInView(ctaRef, { amount: 0.4, once: true });
 
   const categories = [
     { name: "All", icon: Building },
@@ -160,149 +104,42 @@ const Projects = () => {
     ? projects 
     : projects.filter(project => project.category === activeCategory);
 
-  // Handle sticky filter bar
-  useEffect(() => {
-    const handleScroll = () => {
-      if (heroRef.current && filterRef.current) {
-        const heroBottom = heroRef.current.offsetTop + heroRef.current.offsetHeight;
-        const scrollTop = window.scrollY;
-        setIsFilterSticky(scrollTop > heroBottom - 100);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Keyboard navigation for lightbox
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!lightboxImage) return;
-      
-      if (e.key === 'Escape') {
-        setLightboxImage(null);
-      } else if (e.key === 'ArrowLeft') {
-        navigateLightbox(-1);
-      } else if (e.key === 'ArrowRight') {
-        navigateLightbox(1);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxImage, lightboxIndex]);
-
-  const navigateLightbox = (direction: number) => {
-    const newIndex = lightboxIndex + direction;
-    if (newIndex >= 0 && newIndex < filteredProjects.length) {
-      setLightboxIndex(newIndex);
-      setLightboxImage(filteredProjects[newIndex].image);
-    }
-  };
-
-  const openLightbox = (image: string, index: number) => {
-    setLightboxImage(image);
-    setLightboxIndex(index);
-  };
-
-  // Skeleton loader component
-  const SkeletonCard = () => (
-    <div className="animate-shimmer bg-gradient-to-r from-muted via-muted/50 to-muted rounded-lg overflow-hidden">
-      <div className="h-64 bg-muted/80"></div>
-      <div className="p-6 space-y-3">
-        <div className="h-6 bg-muted/60 rounded w-3/4"></div>
-        <div className="h-4 bg-muted/40 rounded w-full"></div>
-        <div className="h-4 bg-muted/40 rounded w-2/3"></div>
-        <div className="flex gap-2">
-          <div className="h-6 bg-muted/30 rounded w-16"></div>
-          <div className="h-6 bg-muted/30 rounded w-20"></div>
-        </div>
-      </div>
-    </div>
-  );
-
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section with Parallax */}
-      <motion.section 
-        ref={heroRef}
-        className="relative bg-gradient-hero text-primary-foreground py-32 overflow-hidden"
-        style={{ y: heroParallax }}
-      >
-        <div className="absolute inset-0 bg-black/30"></div>
+      {/* Hero Section */}
+      <section className="relative bg-gradient-hero text-primary-foreground py-20">
+        <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            custom={0}
-            initial="hidden"
-            animate="visible"
-            variants={heroVariants}
-            className="mb-4"
-          >
-            <span className="text-gold text-lg font-medium tracking-wide uppercase">
-              Portfolio Excellence
-            </span>
-          </motion.div>
-          <motion.h1
-            custom={1}
-            initial="hidden"
-            animate="visible"
-            variants={heroVariants}
-            className="text-6xl md:text-7xl font-bold mb-8 text-white leading-tight"
-          >
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in text-gold">
             Our Projects
-          </motion.h1>
-          <motion.p
-            custom={2}
-            initial="hidden"
-            animate="visible"
-            variants={heroVariants}
-            className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto leading-relaxed"
-          >
-            Discover our collection of transformative interior design projects across India
-          </motion.p>
+          </h1>
+          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto animate-slide-up">
+            Explore our portfolio of exceptional interior design projects across various sectors
+          </p>
         </div>
-      </motion.section>
+      </section>
 
-      {/* Sticky Category Filter */}
-      <section
-        ref={filterRef}
-        className={`py-6 bg-background/95 backdrop-blur-sm transition-all duration-200 ${
-          isFilterSticky ? 'sticky top-0 z-40 shadow-hover' : ''
-        }`}
-      >
+      {/* Category Filter */}
+      <section className="py-12 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-4">
             {categories.map((category, index) => {
               const Icon = category.icon;
-              const isActive = activeCategory === category.name;
-              
               return (
-                <motion.div
+                <Button
                   key={category.name}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ duration: 0.15, ease: "easeOut" }}
+                  variant={activeCategory === category.name ? "default" : "outline"}
+                  onClick={() => setActiveCategory(category.name)}
+                  className={`cursor-hover flex items-center space-x-2 px-6 py-3 transition-all duration-300 ease-in-out hover:scale-105 animate-scale-in ${
+                    activeCategory === category.name 
+                      ? "bg-primary text-primary-foreground shadow-luxury" 
+                      : "hover:bg-muted"
+                  }`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <Button
-                    variant={isActive ? "default" : "outline"}
-                    onClick={() => setActiveCategory(category.name)}
-                    className={`relative flex items-center space-x-2 px-6 py-3 transition-all duration-180 ease-yodezeen hover:shadow-hover focus:ring-2 focus:ring-gold focus:ring-offset-2 ${
-                      isActive 
-                        ? "bg-primary text-primary-foreground shadow-luxury" 
-                        : "hover:bg-muted/80"
-                    }`}
-                  >
-                    <Icon className="h-4 w-4" />
-                    <span className="font-medium">{category.name}</span>
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeIndicator"
-                        className="absolute inset-0 bg-primary rounded-md -z-10"
-                        transition={{ duration: 0.2, ease: YODEZEEN_EASING }}
-                      />
-                    )}
-                  </Button>
-                </motion.div>
+                  <Icon className="h-4 w-4" />
+                  <span>{category.name}</span>
+                </Button>
               );
             })}
           </div>
@@ -312,217 +149,90 @@ const Projects = () => {
       {/* Projects Grid */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatePresence mode="wait">
-            <motion.div 
-              key={activeCategory}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-              initial="hidden"
-              animate="visible"
-            >
-              {filteredProjects.map((project, index) => (
-                <motion.div
-                  key={project.id}
-                  custom={index}
-                  variants={cardVariants}
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.18, ease: EASE_OUT_QUART }}
-                  className="group cursor-pointer"
-                  onClick={() => openLightbox(project.image, index)}
-                >
-                  <Card className="overflow-hidden bg-card border-0 shadow-card hover:shadow-luxury transition-all duration-220 ease-yodezeen">
-                    <div className="relative overflow-hidden">
-                      <motion.img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-64 object-cover"
-                        whileHover={{ scale: 1.03 }}
-                        transition={{ duration: 0.15, ease: "easeOut" }}
-                        loading="lazy"
-                      />
-                      
-                      {/* Overlay that appears on hover */}
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        whileHover={{ opacity: 1 }}
-                        transition={{ duration: 0.18, ease: "easeOut" }}
-                        className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"
-                      />
-                      
-                      {/* Category badge */}
-                      <div className="absolute top-4 right-4">
-                        <Badge className="bg-primary/90 text-primary-foreground backdrop-blur-sm">
-                          {project.category}
-                        </Badge>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProjects.map((project, index) => (
+              <Card 
+                key={project.id}
+                className="cursor-hover group bg-gradient-card border-0 shadow-card hover:shadow-luxury transition-all duration-500 ease-in-out hover:scale-105 animate-scale-in overflow-hidden"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="relative overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute top-4 right-4">
+                    <Badge className="bg-primary text-primary-foreground">
+                      {project.category}
+                    </Badge>
+                  </div>
+                  <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="flex items-center space-x-4 text-sm">
+                      <div className="flex items-center space-x-1">
+                        <MapPin className="h-4 w-4" />
+                        <span>{project.location}</span>
                       </div>
-                      
-                      {/* Hover content */}
-                      <motion.div
-                        initial={{ opacity: 0, y: 12 }}
-                        whileHover={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.18, ease: YODEZEEN_EASING }}
-                        className="absolute bottom-4 left-4 right-4 text-white"
-                      >
-                        <div className="flex items-center justify-between text-sm">
-                          <div className="flex items-center space-x-1">
-                            <MapPin className="h-4 w-4" />
-                            <span>{project.location}</span>
-                          </div>
-                          <div className="flex items-center space-x-1">
-                            <Calendar className="h-4 w-4" />
-                            <span>{project.year}</span>
-                          </div>
-                        </div>
-                      </motion.div>
+                      <div className="flex items-center space-x-1">
+                        <Calendar className="h-4 w-4" />
+                        <span>{project.year}</span>
+                      </div>
                     </div>
-                    
-                    <CardContent className="p-6">
-                      <h3 className="text-xl font-bold text-foreground mb-3 line-clamp-2 group-hover:text-primary transition-colors duration-150">
-                        {project.title}
-                      </h3>
-                      <p className="text-muted-foreground mb-4 line-clamp-2 text-sm leading-relaxed">
-                        {project.description}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {project.tags.slice(0, 2).map((tag) => (
-                          <Badge 
-                            key={tag} 
-                            variant="secondary"
-                            className="text-xs bg-muted/60 hover:bg-accent/20 transition-colors duration-150"
-                          >
-                            {tag}
-                          </Badge>
-                        ))}
-                        {project.tags.length > 2 && (
-                          <Badge variant="secondary" className="text-xs bg-muted/40">
-                            +{project.tags.length - 2}
-                          </Badge>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </motion.div>
-          </AnimatePresence>
+                  </div>
+                </div>
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold text-primary mb-2 line-clamp-2">
+                    {project.title}
+                  </h3>
+                  <p className="text-muted-foreground mb-4 line-clamp-2">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <Badge 
+                        key={tag} 
+                        variant="secondary"
+                        className="text-xs bg-muted hover:bg-accent transition-colors duration-200"
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
 
           {filteredProjects.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center py-20"
-            >
+            <div className="text-center py-20">
               <p className="text-2xl text-muted-foreground">
                 No projects found in this category.
               </p>
-            </motion.div>
+            </div>
           )}
         </div>
       </section>
 
-      {/* Lightbox */}
-      <AnimatePresence>
-        {lightboxImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.18, ease: YODEZEEN_EASING }}
-            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm"
-            onClick={() => setLightboxImage(null)}
-          >
-            <div className="flex items-center justify-center h-full p-4">
-              <motion.div
-                initial={{ scale: 0.96, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.96, opacity: 0 }}
-                transition={{ duration: 0.18, ease: YODEZEEN_EASING }}
-                className="relative max-w-5xl max-h-full"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <img
-                  src={lightboxImage}
-                  alt="Project detail"
-                  className="max-w-full max-h-full object-contain rounded-lg shadow-luxury"
-                />
-                
-                {/* Close button */}
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white border-0"
-                  onClick={() => setLightboxImage(null)}
-                >
-                  <X className="h-5 w-5" />
-                </Button>
-                
-                {/* Navigation */}
-                {lightboxIndex > 0 && (
-                  <Button
-                    variant="secondary"
-                    size="icon"
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white border-0"
-                    onClick={() => navigateLightbox(-1)}
-                  >
-                    <ChevronLeft className="h-5 w-5" />
-                  </Button>
-                )}
-                
-                {lightboxIndex < filteredProjects.length - 1 && (
-                  <Button
-                    variant="secondary"
-                    size="icon"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white border-0"
-                    onClick={() => navigateLightbox(1)}
-                  >
-                    <ChevronRight className="h-5 w-5" />
-                  </Button>
-                )}
-                
-                {/* Project info */}
-                <div className="absolute bottom-4 left-4 right-4 bg-black/50 backdrop-blur-sm rounded-lg p-4 text-white">
-                  <h3 className="text-lg font-bold mb-1">
-                    {filteredProjects[lightboxIndex]?.title}
-                  </h3>
-                  <p className="text-sm text-white/80">
-                    {filteredProjects[lightboxIndex]?.description}
-                  </p>
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Valued Partners */}
+      
 
       {/* Call to Action */}
-      <section ref={ctaRef} className="py-20 bg-gradient-hero text-primary-foreground">
+      <section className="py-20 bg-gradient-hero text-primary-foreground">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial="hidden"
-            animate={ctaInView ? "visible" : "hidden"}
-            variants={ctaVariants}
-            className="space-y-8"
+          <h2 className="text-4xl font-bold mb-6 animate-fade-in text-gold">
+            Ready to Start Your Project?
+          </h2>
+          <p className="text-xl mb-8 text-white/90 animate-slide-up">
+            Let's create something extraordinary together
+          </p>
+          <Button 
+            size="lg"
+            variant="secondary"
+            className="cursor-hover bg-gold text-gold-foreground hover:bg-gold/90 shadow-luxury hover:scale-105 transition-all duration-300 ease-in-out animate-scale-in"
           >
-            <h2 className="text-5xl font-bold text-gold">
-              Ready to Create Something Extraordinary?
-            </h2>
-            <p className="text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
-              Let's collaborate to transform your space into a masterpiece that reflects your vision
-            </p>
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.12, ease: "easeOut" }}
-            >
-              <Button 
-                size="lg"
-                variant="secondary"
-                className="bg-gold text-gold-foreground hover:bg-gold/90 shadow-luxury px-8 py-4 text-lg font-semibold transition-all duration-150 focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-primary"
-              >
-                <ExternalLink className="h-5 w-5 mr-2" />
-                Start Your Project
-              </Button>
-            </motion.div>
-          </motion.div>
+            Get Started Today
+          </Button>
         </div>
       </section>
     </div>
