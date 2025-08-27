@@ -141,6 +141,70 @@ export default {
 					'100%': {
 						transform: 'translateX(-100%)'
 					}
+				},
+				'hero-slide-up': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(40px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'stagger-reveal': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(16px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'parallax': {
+					'0%': {
+						transform: 'translateY(0px)'
+					},
+					'100%': {
+						transform: 'translateY(-8px)'
+					}
+				},
+				'slide-indicator': {
+					'0%': {
+						transform: 'translateX(-100%)'
+					},
+					'100%': {
+						transform: 'translateX(0)'
+					}
+				},
+				'shimmer': {
+					'0%': {
+						backgroundPosition: '-468px 0'
+					},
+					'100%': {
+						backgroundPosition: '468px 0'
+					}
+				},
+				'lightbox-in': {
+					'0%': {
+						opacity: '0',
+						transform: 'scale(0.96)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'scale(1)'
+					}
+				},
+				'cta-reveal': {
+					'0%': {
+						opacity: '0',
+						transform: 'scale(0.98)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'scale(1)'
+					}
 				}
 			},
 			animation: {
@@ -150,10 +214,26 @@ export default {
 				'slide-up': 'slide-up 0.8s ease-in-out',
 				'scale-in': 'scale-in 0.4s ease-in-out',
 				'float': 'float 3s ease-in-out infinite',
-				'slide': 'slide 30s linear infinite'
+				'slide': 'slide 30s linear infinite',
+				'hero-slide-up': 'hero-slide-up 250ms cubic-bezier(0.22, 1, 0.36, 1)',
+				'stagger-reveal': 'stagger-reveal 220ms cubic-bezier(0.22, 1, 0.36, 1)',
+				'parallax': 'parallax 1s ease-out',
+				'slide-indicator': 'slide-indicator 200ms cubic-bezier(0.22, 1, 0.36, 1)',
+				'shimmer': 'shimmer 2s linear infinite',
+				'lightbox-in': 'lightbox-in 180ms cubic-bezier(0.22, 1, 0.36, 1)',
+				'cta-reveal': 'cta-reveal 220ms cubic-bezier(0.22, 1, 0.36, 1)',
 			},
 			transitionTimingFunction: {
 				'in-out': 'cubic-bezier(0.4, 0, 0.2, 1)',
+				'yodezeen': 'cubic-bezier(0.22, 1, 0.36, 1)',
+				'ease-out-quart': 'cubic-bezier(0.25, 1, 0.5, 1)',
+			},
+			transitionDuration: {
+				'150': '150ms',
+				'180': '180ms',
+				'220': '220ms',
+				'250': '250ms',
+				'350': '350ms',
 			},
 			backgroundImage: {
 				'gradient-hero': 'var(--gradient-hero)',
