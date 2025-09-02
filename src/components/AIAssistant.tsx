@@ -1,9 +1,12 @@
+// components/AIAssistant.tsx
 import { useState, useRef, useEffect } from "react";
 import { MessageCircle, Send, X, Minimize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+
+type ChatMessage = { role: "user" | "assistant"; content: string };
 
 interface Message {
   id: string;
@@ -18,7 +21,8 @@ const AIAssistant = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      content: "Hello! I'm StoneSense AI, your intelligent interior design assistant. I can help you with design advice, space planning, product recommendations, and construction insights. What would you like to explore today?",
+      content:
+        "Hello! I'm StoneSense AI, your interior design assistant. Tell me your space, dimensions, style, budget, and timeline—I'll suggest a plan and next steps.",
       isUser: false,
       timestamp: new Date(),
     },
@@ -27,13 +31,15 @@ const AIAssistant = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Use NEXT_PUBLIC_ so it’s configurable without code changes
+  const API_URL =
+    process.env.NEXT_PUBLIC_CHAT_API_URL ||
+    "https://chat-bot-api-pi.vercel.app/api/chat"; // your working API
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+  useEffect(() => { scrollToBottom(); }, [messages]);
 
   const sendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
@@ -50,50 +56,50 @@ const AIAssistant = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      // Convert last turns into OpenAI-style messages
+      const history: ChatMessage[] = messages.slice(-5).map((m) => ({
+        role: m.isUser ? "user" : "assistant",
+        content: m.content,
+      }));
+
+      const payload = {
+        messages: [
+          // We keep the system prompt on the server for safety,
+          // so here we only send conversation history + the latest user input.
+          ...history,
+          { role: "user", content: userMessage.content },
+        ],
+        // Optional lead capture you can extend later:
+        // lead: { name, email, phone }
+      };
+
+      const res = await fetch(API_URL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer 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",
-        },
-        body: JSON.stringify({
-          model: "gpt-4o-mini",
-          messages: [
-            {
-              role: "system",
-              content: "You are StoneSense AI, a professional interior design assistant for Hagerstone International Pvt. Ltd. You specialize in interior design, space planning, construction, MEP services, furniture, and sanitary items. Provide helpful, professional advice while promoting Hagerstone's services when relevant. Keep responses concise but informative.",
-            },
-            ...messages.slice(-5).map((msg) => ({
-              role: msg.isUser ? "user" : "assistant",
-              content: msg.content,
-            })),
-            {
-              role: "user",
-              content: inputValue,
-            },
-          ],
-          max_tokens: 300,
-          temperature: 0.7,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
-      const data = await response.json();
-      
-      if (data.choices && data.choices[0]) {
-        const aiMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          content: data.choices[0].message.content,
-          isUser: false,
-          timestamp: new Date(),
-        };
-        setMessages((prev) => [...prev, aiMessage]);
-      } else {
-        throw new Error("Invalid response");
+      if (!res.ok) {
+        throw new Error(`API error: ${res.status}`);
       }
-    } catch (error) {
-      const errorMessage: Message = {
+
+      const data = await res.json();
+      const text =
+        (data && (data.reply as string)) ||
+        "Sorry, I couldn't generate a response.";
+
+      const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: "I apologize, but I'm having trouble connecting right now. Please try again later or contact us directly for immediate assistance.",
+        content: text,
+        isUser: false,
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, aiMessage]);
+    } catch (err) {
+      const errorMessage: Message = {
+        id: (Date.now() + 2).toString(),
+        content:
+          "I’m having trouble reaching the assistant right now. Please try again in a moment.",
         isUser: false,
         timestamp: new Date(),
       };
@@ -123,9 +129,11 @@ const AIAssistant = () => {
   }
 
   return (
-    <Card className={`fixed bottom-8 right-8 w-96 bg-background shadow-luxury border-2 border-primary/20 z-40 animate-scale-in ${
-      isMinimized ? "h-16" : "h-[500px]"
-    } transition-all duration-300`}>
+    <Card
+      className={`fixed bottom-8 right-8 w-96 bg-background shadow-luxury border-2 border-primary/20 z-40 animate-scale-in ${
+        isMinimized ? "h-16" : "h-[500px]"
+      } transition-all duration-300`}
+    >
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-border bg-gradient-hero rounded-t-lg">
         <div className="flex items-center space-x-2">
@@ -162,21 +170,16 @@ const AIAssistant = () => {
           {/* Messages */}
           <ScrollArea className="flex-1 p-4 h-[380px]">
             <div className="space-y-4">
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${message.isUser ? "justify-end" : "justify-start"}`}
-                >
+              {messages.map((m) => (
+                <div key={m.id} className={`flex ${m.isUser ? "justify-end" : "justify-start"}`}>
                   <div
                     className={`max-w-[80%] p-3 rounded-lg ${
-                      message.isUser
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-muted text-foreground"
+                      m.isUser ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
                     }`}
                   >
-                    <p className="text-sm">{message.content}</p>
+                    <p className="text-sm whitespace-pre-wrap">{m.content}</p>
                     <span className="text-xs opacity-70 mt-1 block">
-                      {message.timestamp.toLocaleTimeString()}
+                      {m.timestamp.toLocaleTimeString()}
                     </span>
                   </div>
                 </div>
@@ -202,7 +205,7 @@ const AIAssistant = () => {
               <Input
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyPress}
                 placeholder="Ask about interior design, space planning..."
                 className="flex-1"
                 disabled={isLoading}
