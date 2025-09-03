@@ -33,7 +33,7 @@ const AIAssistant = () => {
 
   // Use NEXT_PUBLIC_ so it’s configurable without code changes
   const API_URL =
-    process.env.NEXT_PUBLIC_CHAT_API_URL ||
+    import.meta.env.VITE_CHAT_API_URL ||
     "https://chat-bot-api-pi.vercel.app/api/chat"; // your working API
 
   const scrollToBottom = () => {
