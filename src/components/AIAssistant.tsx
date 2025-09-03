@@ -15,21 +15,6 @@ interface Message {
   timestamp: Date;
 }
 
-type Lead = {
-  name?: string;
-  email?: string;
-  phone?: string;
-  source?: string;
-  page_url?: string;
-  utm_source?: string;
-  utm_medium?: string;
-  utm_campaign?: string;
-  message?: string;
-};
-
-const emailOK = (s: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
-const phoneOK = (s: string) => /[0-9]{7,}/.test(String(s || "").replace(/\D/g, ""));
-
 const AIAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -37,51 +22,27 @@ const AIAssistant = () => {
     {
       id: "1",
       content:
-        "Hello! I'm StoneSense AI, your interior design assistant. Tell me your space, dimensions, style, budget, and timeline - I'll suggest a plan and next steps.",
+        "Hello! I'm StoneSense AI, your interior design assistant. Tell me your space, dimensions, style, budget, and timeline—I'll suggest a plan and next steps.",
       isUser: false,
       timestamp: new Date(),
     },
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  // ---- Lead capture state ----
-  const [lead, setLead] = useState<Lead>(() => {
-    if (typeof window === "undefined") return {};
-    try {
-      const raw = localStorage.getItem("hg_lead");
-      return raw ? JSON.parse(raw) : {};
-    } catch {
-      return {};
-    }
-  });
-  const [consent, setConsent] = useState(true);
-  const [leadError, setLeadError] = useState<string | null>(null);
-
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Use NEXT_PUBLIC_ so it’s configurable without code changes
   const API_URL =
-    (process as any).env?.NEXT_PUBLIC_CHAT_API_URL ||
-    "https://chat-bot-api-pi.vercel.app/api/chat";
+    process.env.NEXT_PUBLIC_CHAT_API_URL ||
+    "https://chat-bot-api-pi.vercel.app/api/chat"; // your working API
 
-  const scrollToBottom = () => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
   useEffect(() => { scrollToBottom(); }, [messages]);
-
-  // Persist lead in localStorage
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("hg_lead", JSON.stringify(lead || {}));
-    }
-  }, [lead]);
 
   const sendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
-
-    // Validate lead (only when user filled something)
-    if ((lead.email && !emailOK(lead.email)) || (lead.phone && !phoneOK(lead.phone || ""))) {
-      setLeadError("Please enter a valid email or phone.");
-      return;
-    }
-    setLeadError(null);
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -89,35 +50,27 @@ const AIAssistant = () => {
       isUser: true,
       timestamp: new Date(),
     };
+
     setMessages((prev) => [...prev, userMessage]);
     setInputValue("");
     setIsLoading(true);
 
     try {
-      // Last few turns for context
+      // Convert last turns into OpenAI-style messages
       const history: ChatMessage[] = messages.slice(-5).map((m) => ({
         role: m.isUser ? "user" : "assistant",
         content: m.content,
       }));
 
-      // Attach UTM + page URL + lead info
-      const url = typeof window !== "undefined" ? new URL(window.location.href) : null;
       const payload = {
         messages: [
+          // We keep the system prompt on the server for safety,
+          // so here we only send conversation history + the latest user input.
           ...history,
           { role: "user", content: userMessage.content },
         ],
-        lead: (lead.email || lead.phone) ? {
-          name: lead.name || "",
-          email: lead.email || "",
-          phone: lead.phone || "",
-          source: "chat-widget",
-          page_url: url?.href || "",
-          utm_source: url?.searchParams.get("utm_source") || "",
-          utm_medium: url?.searchParams.get("utm_medium") || "",
-          utm_campaign: url?.searchParams.get("utm_campaign") || "",
-          message: userMessage.content,
-        } as Lead : undefined,
+        // Optional lead capture you can extend later:
+        // lead: { name, email, phone }
       };
 
       const res = await fetch(API_URL, {
@@ -126,9 +79,14 @@ const AIAssistant = () => {
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) throw new Error(`API error: ${res.status}`);
+      if (!res.ok) {
+        throw new Error(`API error: ${res.status}`);
+      }
+
       const data = await res.json();
-      const text = (data?.reply as string) || "Sorry, I couldn't generate a response.";
+      const text =
+        (data && (data.reply as string)) ||
+        "Sorry, I couldn't generate a response.";
 
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -140,7 +98,8 @@ const AIAssistant = () => {
     } catch (err) {
       const errorMessage: Message = {
         id: (Date.now() + 2).toString(),
-        content: "I’m having trouble reaching the assistant right now. Please try again in a moment.",
+        content:
+          "I’m having trouble reaching the assistant right now. Please try again in a moment.",
         isUser: false,
         timestamp: new Date(),
       };
@@ -172,7 +131,7 @@ const AIAssistant = () => {
   return (
     <Card
       className={`fixed bottom-8 right-8 w-96 bg-background shadow-luxury border-2 border-primary/20 z-40 animate-scale-in ${
-        isMinimized ? "h-16" : "h-[560px]"
+        isMinimized ? "h-16" : "h-[500px]"
       } transition-all duration-300`}
     >
       {/* Header */}
@@ -208,24 +167,6 @@ const AIAssistant = () => {
 
       {!isMinimized && (
         <>
-          {/* Lead capture (shown until we have an email or phone) */}
-          {!lead.email && !lead.phone && (
-            <div className="p-3 border-b text-xs space-y-2 bg-muted/30">
-              <div className="flex gap-2">
-                <Input placeholder="Name" value={lead.name || ""} onChange={e => setLead(v => ({...v, name: e.target.value}))}/>
-                <Input placeholder="Email" value={lead.email || ""} onChange={e => setLead(v => ({...v, email: e.target.value}))}/>
-              </div>
-              <div className="flex gap-2 mt-2 items-center">
-                <Input placeholder="Phone" value={lead.phone || ""} onChange={e => setLead(v => ({...v, phone: e.target.value}))}/>
-                <label className="flex items-center gap-2 text-muted-foreground">
-                  <input type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} />
-                  I agree to be contacted.
-                </label>
-              </div>
-              {leadError && <p className="text-destructive mt-1">{leadError}</p>}
-            </div>
-          )}
-
           {/* Messages */}
           <ScrollArea className="flex-1 p-4 h-[380px]">
             <div className="space-y-4">
@@ -271,7 +212,7 @@ const AIAssistant = () => {
               />
               <Button
                 onClick={sendMessage}
-                disabled={!inputValue.trim() || isLoading || (!consent && (!lead.email && !lead.phone))}
+                disabled={!inputValue.trim() || isLoading}
                 size="sm"
                 className="bg-primary hover:bg-primary/90"
               >
