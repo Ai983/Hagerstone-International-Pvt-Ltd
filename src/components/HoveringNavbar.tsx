@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import { AnimatePresence, motion as m } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Instagram, Linkedin, Twitter } from "lucide-react";
 
 const HoveringNavbar = () => {
   const location = useLocation();
@@ -118,26 +118,29 @@ const HoveringNavbar = () => {
               {/* LEFT SIDE - Navigation Links */}
               <div className="flex-1 flex flex-col justify-center pl-12 md:pl-20">
                 <div>
-                  <h2 className="text-white/60 text-lg font-medium mb-8 tracking-widest">PAGES</h2>
+                  <h2 className="text-white text-4xl md:text-5xl font-bold mb-12 tracking-wider">PAGES</h2>
                   <nav>
-                    <ul className="space-y-6">
+                    <ul className="space-y-8">
                       {[
-                        { to: "/", label: "01 HOME" },
-                        { to: "/about", label: "02 ABOUT" },
-                        { to: "/projects", label: "03 PROJECTS" },
-                        { to: "/services", label: "04 OUR SERVICES" },
-                        { to: "/ideas", label: "05 IDEAS" },
-                        { to: "/blog", label: "06 BLOG" },
-                        { to: "/find-your-style", label: "07 FIND YOUR STYLE" },
-                        { to: "/contact", label: "08 CONTACT" },
-                      ].map(({ to, label }) => (
-                        <li key={to}>
+                        { to: "/", label: "HOME", number: "01" },
+                        { to: "/about", label: "ABOUT", number: "02" },
+                        { to: "/projects", label: "PROJECTS", number: "03" },
+                        { to: "/services", label: "OUR SERVICES", number: "04" },
+                        { to: "/ideas", label: "IDEAS", number: "05" },
+                        { to: "/blog", label: "BLOG", number: "06" },
+                        { to: "/find-your-style", label: "FIND YOUR STYLE", number: "07" },
+                        { to: "/contact", label: "CONTACT", number: "08" },
+                      ].map(({ to, label, number }) => (
+                        <li key={to} className="relative">
                           <Link
                             to={to}
                             onClick={() => setMenuOpen(false)}
-                            className="block text-2xl md:text-4xl font-light text-white/80 hover:text-white transition-colors duration-300 tracking-wide"
+                            className="group block text-2xl md:text-3xl font-light text-white/90 hover:text-white transition-colors duration-300 tracking-wide relative pb-2"
                           >
+                            <span className="text-lg md:text-xl text-white/60 mr-4">{number}</span>
                             {label}
+                            <div className="absolute bottom-0 left-0 w-full h-px bg-white/20"></div>
+                            <div className="absolute bottom-0 left-0 h-px bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out w-full"></div>
                           </Link>
                         </li>
                       ))}
@@ -149,39 +152,39 @@ const HoveringNavbar = () => {
               {/* RIGHT SIDE - Contact Info (Desktop Only) */}
               <div className="hidden lg:flex flex-1 flex-col justify-center pr-12 md:pr-20 text-right">
                 <div>
-                  <h2 className="text-white/60 text-lg font-medium mb-8 tracking-widest">FIND US HERE</h2>
-                  <div className="space-y-4 text-white/80">
-                    <div className="text-lg">Hagerstone International Pvt. Ltd.</div>
-                    <div className="text-sm leading-relaxed">
+                  <h2 className="text-white text-4xl md:text-5xl font-bold mb-12 tracking-wider">FIND US HERE</h2>
+                  <div className="space-y-6 text-white">
+                    <div className="text-xl font-medium">Hagerstone International Pvt. Ltd.</div>
+                    <div className="text-base leading-relaxed text-white/80">
                       No 21, 8th Cross Road, 24th Main Rd,<br />
                       2nd Phase, J. P. Nagar, Bengaluru,<br />
                       Karnataka 560078
                     </div>
-                    <div className="mt-6 space-y-2">
-                      <div>Email: global@hagerstone.com</div>
-                      <div>Phone: +91-XXXXXXXXXX</div>
+                    <div className="mt-8 space-y-3 text-white/90">
+                      <div className="text-lg">Email: global@hagerstone.com</div>
+                      <div className="text-lg">Phone: +91-XXXXXXXXXX</div>
                     </div>
-                    <div className="flex justify-end gap-4 mt-8">
+                    <div className="flex justify-end gap-6 mt-12">
                       <a 
                         href="https://www.linkedin.com/company/hagerstone" 
-                        className="text-white/60 hover:text-white transition-colors"
+                        className="text-white/70 hover:text-white transition-colors duration-300 p-2"
                         aria-label="LinkedIn"
                       >
-                        LinkedIn
+                        <Linkedin size={28} />
                       </a>
                       <a 
                         href="https://instagram.com/" 
-                        className="text-white/60 hover:text-white transition-colors"
+                        className="text-white/70 hover:text-white transition-colors duration-300 p-2"
                         aria-label="Instagram"
                       >
-                        Instagram
+                        <Instagram size={28} />
                       </a>
                       <a 
                         href="https://x.com/" 
-                        className="text-white/60 hover:text-white transition-colors"
+                        className="text-white/70 hover:text-white transition-colors duration-300 p-2"
                         aria-label="X"
                       >
-                        X
+                        <Twitter size={28} />
                       </a>
                     </div>
                   </div>
@@ -190,9 +193,24 @@ const HoveringNavbar = () => {
             </div>
 
             {/* Mobile Contact Info - Bottom */}
-            <div className="lg:hidden absolute bottom-8 left-6 right-6 text-center text-white/80">
-              <div className="text-sm">
-                Email: global@hagerstone.com • Phone: +91-XXXXXXXXXX
+            <div className="lg:hidden absolute bottom-12 left-6 right-6 text-center text-white">
+              <div className="mb-6">
+                <h3 className="text-2xl font-bold mb-4 tracking-wider">FIND US HERE</h3>
+                <div className="text-sm text-white/80 leading-relaxed">
+                  Email: global@hagerstone.com<br />
+                  Phone: +91-XXXXXXXXXX
+                </div>
+              </div>
+              <div className="flex justify-center gap-6">
+                <a href="https://www.linkedin.com/company/hagerstone" className="text-white/70 hover:text-white transition-colors">
+                  <Linkedin size={24} />
+                </a>
+                <a href="https://instagram.com/" className="text-white/70 hover:text-white transition-colors">
+                  <Instagram size={24} />
+                </a>
+                <a href="https://x.com/" className="text-white/70 hover:text-white transition-colors">
+                  <Twitter size={24} />
+                </a>
               </div>
             </div>
           </m.div>
