@@ -90,77 +90,110 @@ const HoveringNavbar = () => {
       </div>
       <AnimatePresence>
         {menuOpen && (
-          <m.div
-            key="fs-menu"
-            id="fullscreen-menu"
-            className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-md supports-[backdrop-filter]:backdrop-blur-md"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            role="dialog"
-            aria-modal="true"
-          >
-            {/* Close button duplicated inside overlay for UX */}
-            <button
-              type="button"
-              onClick={() => setMenuOpen(false)}
-              className="absolute right-5 top-5 inline-flex h-10 w-10 items-center justify-center rounded-md bg-white/10 hover:bg-white/20 text-white focus:outline-none focus:ring-2 focus:ring-white/60"
-              aria-label="Close menu"
+            <m.div
+              key="fs-menu"
+              id="fullscreen-menu"
+              className="fixed inset-0 z-[60] bg-black/70 backdrop-blur-md"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              role="dialog"
+              aria-modal="true"
             >
-              <X className="h-6 w-6" aria-hidden />
-            </button>
+              {/* Close button in top-right */}
+              <button
+                type="button"
+                onClick={() => setMenuOpen(false)}
+                className="absolute right-6 top-6 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white focus:outline-none focus:ring-2 focus:ring-white/60 z-10"
+                aria-label="Close menu"
+              >
+                <X className="h-6 w-6" aria-hidden />
+              </button>
 
-            {/* Two-column layout like KlimArt: Links left, Contact/Social right */}
-            <div className="flex h-full w-full flex-col md:flex-row items-center justify-between px-8 py-12">
+              {/* Main content container */}
+              <div className="flex h-full w-full">
+                {/* LEFT SIDE - Navigation Links */}
+                <div className="flex-1 flex flex-col justify-center pl-12 md:pl-20">
+                  <div>
+                    <h2 className="text-white/60 text-lg font-medium mb-8 tracking-widest">PAGES</h2>
+                    <nav>
+                      <ul className="space-y-6">
+                        {[
+                          { to: "/", label: "01 HOME" },
+                          { to: "/about", label: "02 ABOUT" },
+                          { to: "/projects", label: "03 PROJECTS" },
+                          { to: "/services", label: "04 OUR SERVICES" },
+                          { to: "/ideas", label: "05 IDEAS" },
+                          { to: "/blog", label: "06 BLOG" },
+                          { to: "/find-your-style", label: "07 FIND YOUR STYLE" },
+                          { to: "/contact", label: "08 CONTACT" },
+                        ].map(({ to, label }) => (
+                          <li key={to}>
+                            <Link
+                              to={to}
+                              onClick={() => setMenuOpen(false)}
+                              className="block text-2xl md:text-4xl font-light text-white/80 hover:text-white transition-colors duration-300 tracking-wide"
+                            >
+                              {label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
 
-              {/* LEFT: Nav links */}
-              <nav className="flex-1">
-                <ul className="space-y-4">
-                  {[
-                    { to: "/", label: "01 Home" },
-                    { to: "/about", label: "02 About" },
-                    { to: "/projects", label: "03 Projects" },
-                    { to: "/services", label: "04 Our Services" },
-                    { to: "/ideas", label: "05 Ideas" },
-                    { to: "/blog", label: "06 Blog" },
-                    { to: "/find-your-style", label: "07 Find Your Style" },
-                    { to: "/contact", label: "08 Contact Us" },
-                  ].map(({ to, label }) => (
-                    <li key={to}>
-                      <Link
-                        to={to}
-                        onClick={() => setMenuOpen(false)}
-                        className="block text-2xl md:text-4xl font-semibold text-white/90 hover:text-white transition"
-                      >
-                        {label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-
-               {/* RIGHT: Contact / Social (placeholder—swap with your real info) */}
-              <div className="hidden md:block flex-1 text-right text-white/85">
-                <div className="space-y-3">
-                  <p className="text-lg md:text-xl font-medium">Hagerstone International Pvt. Ltd.</p>
-                  <p>global@hagerstone.com</p>
-                  <p>+91-XXXXXXXXXX</p>
-                  <div className="mt-4 inline-flex items-center gap-4">
-                    {/* Replace with real links/icons as needed */}
-                    <a href="https://www.linkedin.com/company/hagerstone" className="underline hover:no-underline">LinkedIn</a>
-                    <a href="https://instagram.com/" className="underline hover:no-underline">Instagram</a>
-                    <a href="https://x.com/" className="underline hover:no-underline">X</a>
+                {/* RIGHT SIDE - Contact Info (Desktop Only) */}
+                <div className="hidden lg:flex flex-1 flex-col justify-center pr-12 md:pr-20 text-right">
+                  <div>
+                    <h2 className="text-white/60 text-lg font-medium mb-8 tracking-widest">FIND US HERE</h2>
+                    <div className="space-y-4 text-white/80">
+                      <div className="text-lg">Hagerstone International Pvt. Ltd.</div>
+                      <div className="text-sm leading-relaxed">
+                        No 21, 8th Cross Road, 24th Main Rd,<br />
+                        2nd Phase, J. P. Nagar, Bengaluru,<br />
+                        Karnataka 560078
+                      </div>
+                      <div className="mt-6 space-y-2">
+                        <div>Email: global@hagerstone.com</div>
+                        <div>Phone: +91-XXXXXXXXXX</div>
+                      </div>
+                      <div className="flex justify-end gap-4 mt-8">
+                        <a 
+                          href="https://www.linkedin.com/company/hagerstone" 
+                          className="text-white/60 hover:text-white transition-colors"
+                          aria-label="LinkedIn"
+                        >
+                          LinkedIn
+                        </a>
+                        <a 
+                          href="https://instagram.com/" 
+                          className="text-white/60 hover:text-white transition-colors"
+                          aria-label="Instagram"
+                        >
+                          Instagram
+                        </a>
+                        <a 
+                          href="https://x.com/" 
+                          className="text-white/60 hover:text-white transition-colors"
+                          aria-label="X"
+                        >
+                          X
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Mobile contact block (below links) */}
-            <div className="md:hidden absolute bottom-6 left-6 right-6 text-white/85">
-              <p className="font-medium">global@hagerstone.com • +91-XXXXXXXXXX</p>
-            </div>
-          </m.div>
+              {/* Mobile Contact Info - Bottom */}
+              <div className="lg:hidden absolute bottom-8 left-6 right-6 text-center text-white/80">
+                <div className="text-sm">
+                  Email: global@hagerstone.com • Phone: +91-XXXXXXXXXX
+                </div>
+              </div>
+            </m.div>
         )}
       </AnimatePresence>
 
