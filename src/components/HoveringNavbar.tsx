@@ -2,7 +2,6 @@ import { motion, useAnimation } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
-import { isFreedomWeek } from "@/lib/independence";
 import { AnimatePresence, motion as m } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
@@ -44,8 +43,6 @@ const HoveringNavbar = () => {
     });
   }, [location.pathname, controls]);
 
-  const showBadge = isFreedomWeek();
-
   return (
     <motion.nav
       initial={{ y: -80, opacity: 0 }}
@@ -54,7 +51,6 @@ const HoveringNavbar = () => {
         isHome ? "fixed" : "sticky"
       } top-0 w-full z-50 relative overflow-hidden bg-white/60 dark:bg-black/40 backdrop-blur-md shadow-sm`}
     >
-      {showBadge && <div aria-hidden className="flag-wave" />}
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between relative z-10">
         {/* Logo & Branding */}
         <div className="flex items-center gap-4">
