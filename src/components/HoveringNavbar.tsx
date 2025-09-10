@@ -116,7 +116,8 @@ const HoveringNavbar = () => {
             </button>
 
             {/* Two-column layout like KlimArt: Links left, Contact/Social right */}
-            <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-6">
+            <div className="flex h-full w-full flex-col md:flex-row items-center justify-between px-8 py-12">
+
               {/* LEFT: Nav links */}
               <nav className="flex-1">
                 <ul className="space-y-4">
