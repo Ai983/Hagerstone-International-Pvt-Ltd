@@ -48,7 +48,9 @@ const HoveringNavbar = () => {
         animate={controls}
         className={`${
           isHome ? "fixed" : "sticky"
-        } top-0 w-full z-50 relative overflow-hidden bg-white/60 dark:bg-black/40 backdrop-blur-md shadow-sm`}
+        } top-0 w-full z-50 relative overflow-hidden ${
+          menuOpen ? "bg-transparent" : "bg-white/60 dark:bg-black/40 backdrop-blur-md shadow-sm"
+        }`}
       >
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between relative z-10">
           {/* Logo & Branding */}
