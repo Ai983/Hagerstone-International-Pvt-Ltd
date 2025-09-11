@@ -95,7 +95,7 @@ const HoveringNavbar = () => {
           <m.div
             key="fs-menu"
             id="fullscreen-menu"
-            className="fixed inset-0 z-[100] bg-black/75 backdrop-blur-md"
+            className="fixed inset-0 z-[40] bg-black/75 backdrop-blur-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -103,29 +103,6 @@ const HoveringNavbar = () => {
             role="dialog"
             aria-modal="true"
           >
-            {/* Logo - Fixed at top-left */}
-            <div className="fixed top-4 left-4 z-[120] flex items-center gap-4">
-              <motion.img
-                src="/logoo.png"
-                alt="Logo"
-                className="w-10 h-10"
-              />
-              <motion.div className="leading-tight">
-                <div className="text-lg font-bold text-white">Hagerstone</div>
-                <div className="text-sm text-white/70">International Pvt. Ltd.</div>
-              </motion.div>
-            </div>
-
-            {/* Close button - Fixed at top-right */}
-            <button
-              type="button"
-              onClick={() => setMenuOpen(false)}
-              className="fixed top-4 right-4 z-[120] inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/50"
-              aria-label="Close menu"
-            >
-              <X className="h-6 w-6 text-white" />
-            </button>
-
             {/* Centered content container with margins */}
             <div className="flex h-full w-full items-center justify-center px-20 py-48">
               <div className="max-w-4xl w-full">
