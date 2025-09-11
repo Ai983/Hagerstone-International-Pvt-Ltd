@@ -52,7 +52,7 @@ const HoveringNavbar = () => {
       >
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between relative z-10">
           {/* Logo & Branding */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 z-[110]">
             <motion.img
               src="/logoo.png"
               alt="Logo"
@@ -103,20 +103,8 @@ const HoveringNavbar = () => {
             role="dialog"
             aria-modal="true"
           >
-            {/* Logo in overlay top-left */}
-            <div className="absolute left-6 top-6 flex items-center gap-3">
-              <img src="/logoo.png" alt="Logo" className="w-12 h-12" />
-              <span className="text-white text-lg font-semibold">Hagerstone</span>
-            </div>
-            {/* Close button in top-right */}
-            <button
-              type="button"
-              onClick={() => setMenuOpen(false)}
-              className="absolute right-6 top-6 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white focus:outline-none focus:ring-2 focus:ring-white/60 z-10"
-              aria-label="Close menu"
-            >
-              <X className="h-6 w-6" aria-hidden />
-            </button>
+    
+
 
             {/* Main content container */}
             <div className="flex h-full w-full items-start justify-center pt-24 px-20">
