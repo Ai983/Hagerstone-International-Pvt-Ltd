@@ -104,19 +104,19 @@ const HoveringNavbar = () => {
             aria-modal="true"
           >
             {/* Centered content container with margins */}
-            <div className="flex h-full w-full items-center justify-center px-20 py-48">
+            <div className="flex h-full w-full items-center justify-center px-20 pt-32 pb-16">
               <div className="max-w-4xl w-full">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
                   {/* LEFT SIDE - Navigation Links */}
                   <div className="flex flex-col justify-start pl-8">
-                    <div className="relative mb-12">
-                      <h2 className="text-white text-4xl font-bold tracking-[0.3em] uppercase mb-4">
+                    <div className="relative mb-10">
+                      <h2 className="text-white text-2xl font-bold tracking-[0.3em] uppercase mb-4">
                         PAGES
                       </h2>
-                      <div className="w-48 h-0.5 bg-white"></div>
+                      <div className="w-32 h-0.5 bg-white"></div>
                     </div>
                     <nav>
-                      <ul className="space-y-6 pl-4">
+                      <ul className="space-y-4 pl-4">
                         {[
                           { to: "/", label: "HOME", number: "01" },
                           { to: "/about", label: "ABOUT", number: "02" },
@@ -131,15 +131,15 @@ const HoveringNavbar = () => {
                             <Link
                               to={to}
                               onClick={() => setMenuOpen(false)}
-                              className="flex items-center py-3 text-xl font-medium tracking-wide text-white hover:text-white transition-colors duration-300"
+                              className="flex items-center py-2 text-lg font-medium tracking-wide text-white hover:text-white transition-colors duration-300"
                             >
-                              <span className="w-8 text-sm font-normal text-white/50 tracking-wide mr-6">{number}</span>
+                              <span className="w-8 text-xs font-normal text-white/50 tracking-wide mr-6">{number}</span>
                                <span className="relative">
                                  {label}
                                  {/* Static underline - consistent length for all links */}
-                                 <div className="absolute bottom-[-6px] left-[-4px] w-52 h-px bg-white/20"></div>
+                                 <div className="absolute bottom-[-6px] left-[-4px] w-44 h-px bg-white/20"></div>
                                  {/* Animated underline on hover - consistent length for all links */}
-                                 <div className="absolute bottom-[-6px] left-[-4px] w-52 h-px bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out"></div>
+                                 <div className="absolute bottom-[-6px] left-[-4px] w-44 h-px bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out"></div>
                                </span>
                             </Link>
                           </li>
@@ -150,47 +150,47 @@ const HoveringNavbar = () => {
 
                   {/* RIGHT SIDE - Contact Info */}
                   <div className="flex flex-col justify-start pr-8">
-                    <div className="relative mb-12">
-                      <h2 className="text-white text-4xl font-bold tracking-[0.3em] uppercase mb-4">
+                    <div className="relative mb-10">
+                      <h2 className="text-white text-2xl font-bold tracking-[0.3em] uppercase mb-4">
                         FIND US HERE
                       </h2>
-                      <div className="w-64 h-0.5 bg-white"></div>
+                      <div className="w-48 h-0.5 bg-white"></div>
                     </div>
-                    <div className="space-y-8 text-white">
-                      <div className="text-xl font-semibold">Hagerstone International Pvt. Ltd.</div>
-                      <div className="text-base leading-relaxed text-white/80">
+                    <div className="space-y-6 text-white">
+                      <div className="text-lg font-semibold">Hagerstone International Pvt. Ltd.</div>
+                      <div className="text-sm leading-relaxed text-white/80">
                         No 21, 8th Cross Road, 24th Main Rd,<br />
                         2nd Phase, J. P. Nagar, Bengaluru,<br />
                         Karnataka 560078
                       </div>
                       <div className="space-y-2 text-white/90">
-                        <div className="text-base">Email: global@hagerstone.com</div>
-                        <div className="text-base">Phone: +91-XXXXXXXXXX</div>
+                        <div className="text-sm">Email: global@hagerstone.com</div>
+                        <div className="text-sm">Phone: +91-XXXXXXXXXX</div>
                       </div>
-                      <div className="flex gap-6 mt-8">
+                      <div className="flex gap-6 mt-6">
                         <a 
                           href="https://www.linkedin.com/company/hagerstone/posts/?feedView=all" 
                           className="text-white/70 hover:text-white transition-colors duration-300"
                           aria-label="LinkedIn"
                         >
-                          <Linkedin size={24} />
+                          <Linkedin size={20} />
                         </a>
                         <a 
                           href="http://instagram.com/hagerstone_international/" 
                           className="text-white/70 hover:text-white transition-colors duration-300"
                           aria-label="Instagram"
                         >
-                          <Instagram size={24} />
+                          <Instagram size={20} />
                         </a>
                         <a 
                           href="https://www.facebook.com/HagerstoneInternational" 
                           className="text-white/70 hover:text-white transition-colors duration-300"
                           aria-label="Facebook"
                         >
-                          <Facebook size={24} />
+                          <Facebook size={20} />
                         </a>
                       </div>
-                      <button className="mt-8 px-8 py-3 border border-white text-white uppercase tracking-[0.15em] text-sm font-medium hover:bg-white hover:text-black transition-all duration-300">
+                      <button className="mt-6 px-6 py-2 border border-white text-white uppercase tracking-[0.15em] text-xs font-medium hover:bg-white hover:text-black transition-all duration-300">
                         GET IN TOUCH →
                       </button>
                     </div>
