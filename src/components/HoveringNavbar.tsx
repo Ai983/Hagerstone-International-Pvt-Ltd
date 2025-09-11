@@ -118,7 +118,7 @@ const HoveringNavbar = () => {
               {/* LEFT SIDE - Navigation Links */}
               <div className="flex-1 flex flex-col justify-center pl-12 md:pl-20">
                 <div>
-                  <h2 className="text-white text-3xl md:text-4xl font-semibold tracking-wider mb-6 pb-2 border-b border-white/20 w-20">
+                  <h2 className="text-white text-3xl md:text-4xl font-semibold tracking-wider mb-6 pb-2 border-b border-white/20 w-30">
                    PAGES
                   </h2>
                   <nav>
@@ -154,7 +154,7 @@ const HoveringNavbar = () => {
               {/* RIGHT SIDE - Contact Info (Desktop Only) */}
               <div className="hidden lg:flex flex-1 flex-col justify-center pr-12 md:pr-20 text-right">
                 <div>
-                  <h2 className="text-white text-2xl md:text-3xl font-medium tracking-wide uppercase pb-2 mb-6 border-b border-white/20 w-20">
+                  <h2 className="text-white text-2xl md:text-3xl font-medium tracking-wide uppercase pb-2 mb-6 border-b border-white/30 w-30">
                    FIND US HERE
                   </h2>
                   <div className="space-y-6 text-white">
