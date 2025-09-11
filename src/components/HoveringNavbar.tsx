@@ -52,7 +52,7 @@ const HoveringNavbar = () => {
       >
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between relative z-10">
           {/* Logo & Branding */}
-          <div className="flex items-center gap-4 z-[110]">
+          <div className="flex items-center gap-4 z-[120]">
             <motion.img
               src="/logoo.png"
               alt="Logo"
