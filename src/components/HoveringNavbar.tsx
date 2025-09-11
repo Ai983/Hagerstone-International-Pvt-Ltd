@@ -69,8 +69,8 @@ const HoveringNavbar = () => {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="leading-tight"
             >
-              <div className="text-lg font-bold text-primary">Hagerstone</div>
-              <div className="text-sm text-muted-foreground">International Pvt. Ltd.</div>
+              <div className={`text-lg font-bold ${menuOpen ? "text-white" : "text-primary"}`}>Hagerstone</div>
+              <div className={`text-sm ${menuOpen ? "text-white/70" : "text-muted-foreground"}`}>International Pvt. Ltd.</div>
             </motion.div>
           </div>
 
@@ -80,14 +80,18 @@ const HoveringNavbar = () => {
             <button
               type="button"
               onClick={() => setMenuOpen(v => !v)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-black/5 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-primary"
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-md focus:outline-none focus:ring-2 ${
+                menuOpen 
+                  ? "hover:bg-white/10 focus:ring-white/50 text-white" 
+                  : "hover:bg-black/5 dark:hover:bg-white/10 focus:ring-primary"
+              }`}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
               aria-controls="fullscreen-menu"
             >
               {menuOpen ? <X className="h-6 w-6" aria-hidden /> : <Menu className="h-6 w-6" aria-hidden />}
             </button>
-          </div>  
+          </div>
         </div>
       </motion.nav>
 
