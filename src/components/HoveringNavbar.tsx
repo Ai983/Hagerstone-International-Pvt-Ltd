@@ -127,16 +127,16 @@ const HoveringNavbar = () => {
             </button>
 
             {/* Centered content container with margins */}
-            <div className="flex h-full w-full items-center justify-center px-8 py-20">
-              <div className="max-w-5xl w-full">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+            <div className="flex h-full w-full items-center justify-center px-12 py-28">
+              <div className="max-w-6xl w-full">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-32">
                   {/* LEFT SIDE - Navigation Links */}
-                  <div className="flex flex-col justify-start">
+                  <div className="flex flex-col justify-start pl-8">
                     <div className="relative mb-12">
-                      <h2 className="text-white text-3xl font-bold tracking-[0.2em] uppercase mb-3">
+                      <h2 className="text-white text-4xl font-bold tracking-[0.3em] uppercase mb-4">
                         PAGES
                       </h2>
-                      <div className="w-16 h-0.5 bg-white"></div>
+                      <div className="w-28 h-0.5 bg-white"></div>
                     </div>
                     <nav>
                       <ul className="space-y-6 pl-4">
@@ -157,13 +157,13 @@ const HoveringNavbar = () => {
                               className="flex items-center py-3 text-xl font-medium tracking-wide text-white hover:text-white transition-colors duration-300"
                             >
                               <span className="w-8 text-sm font-normal text-white/50 tracking-wide mr-6">{number}</span>
-                              <span className="relative">
-                                {label}
-                                {/* Static underline */}
-                                <div className="absolute bottom-[-6px] left-0 right-0 h-px bg-white/20"></div>
-                                {/* Animated underline on hover */}
-                                <div className="absolute bottom-[-6px] left-0 h-px bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out w-full"></div>
-                              </span>
+                               <span className="relative">
+                                 {label}
+                                 {/* Static underline - extends slightly beyond text */}
+                                 <div className="absolute bottom-[-6px] left-[-4px] right-[-8px] h-px bg-white/20"></div>
+                                 {/* Animated underline on hover - extends slightly beyond text */}
+                                 <div className="absolute bottom-[-6px] left-[-4px] h-px bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out" style={{width: 'calc(100% + 12px)'}}></div>
+                               </span>
                             </Link>
                           </li>
                         ))}
@@ -172,12 +172,12 @@ const HoveringNavbar = () => {
                   </div>
 
                   {/* RIGHT SIDE - Contact Info */}
-                  <div className="flex flex-col justify-start">
+                  <div className="flex flex-col justify-start pr-8">
                     <div className="relative mb-12">
-                      <h2 className="text-white text-3xl font-bold tracking-[0.2em] uppercase mb-3">
+                      <h2 className="text-white text-4xl font-bold tracking-[0.3em] uppercase mb-4">
                         FIND US HERE
                       </h2>
-                      <div className="w-20 h-0.5 bg-white"></div>
+                      <div className="w-32 h-0.5 bg-white"></div>
                     </div>
                     <div className="space-y-8 text-white">
                       <div className="text-xl font-semibold">Hagerstone International Pvt. Ltd.</div>
