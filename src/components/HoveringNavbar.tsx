@@ -139,7 +139,7 @@ const HoveringNavbar = () => {
                             onClick={() => setMenuOpen(false)}
                             className="flex items-center py-4 text-xl md:text-2xl font-medium tracking-wide text-white hover:text-white"
                           >
-                            <span className="w-12 text-white/60">{number}</span>
+                            <span className="w-10 text-sm md:text-base font-normal text-white/50 tracking-wide">{number}</span>
                             {label}
                             <div className="absolute bottom-0 left-0 w-full h-px bg-white/20"></div>
                             <div className="absolute bottom-0 left-0 h-px bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out w-full"></div>
