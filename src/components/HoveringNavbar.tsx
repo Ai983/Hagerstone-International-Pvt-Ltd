@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import { AnimatePresence, motion as m } from "framer-motion";
-import { Menu, X, Instagram, Linkedin, Twitter, FacebookIcon } from "lucide-react";
+import { Menu, X, Instagram, Linkedin, Twitter, FacebookIcon, Facebook } from "lucide-react";
 
 const HoveringNavbar = () => {
   const location = useLocation();
@@ -114,11 +114,13 @@ const HoveringNavbar = () => {
             </button>
 
             {/* Main content container */}
-            <div className="flex h-full w-full">
+            <div className="flex h-full w-full items-start pt-20 px-12">
               {/* LEFT SIDE - Navigation Links */}
               <div className="flex-1 flex flex-col justify-center pl-12 md:pl-20">
                 <div>
-                  <h2 className="text-white text-4xl md:text-5xl font-bold mb-12 tracking-wider">PAGES</h2>
+                  <h2 className="text-white text-3xl md:text-4xl font-semibold tracking-wider mb-6 border-b border-white/30 pb-2">
+                   PAGES
+                  </h2>
                   <nav>
                     <ul className="space-y-8">
                       {[
@@ -131,13 +133,13 @@ const HoveringNavbar = () => {
                         { to: "/find-your-style", label: "FIND YOUR STYLE", number: "07" },
                         { to: "/contact", label: "CONTACT", number: "08" },
                       ].map(({ to, label, number }) => (
-                        <li key={to} className="relative">
+                        <li key={to} className="border-b border-white/30 last:border-b-0">
                           <Link
                             to={to}
                             onClick={() => setMenuOpen(false)}
-                            className="group block text-2xl md:text-3xl font-light text-white/90 hover:text-white transition-colors duration-300 tracking-wide relative pb-2"
+                            className="flex items-center py-4 text-xl md:text-2xl font-medium tracking-wide text-white hover:text-white"
                           >
-                            <span className="text-lg md:text-xl text-white/60 mr-4">{number}</span>
+                            <span className="w-12 text-white/60">{number}</span>
                             {label}
                             <div className="absolute bottom-0 left-0 w-full h-px bg-white/20"></div>
                             <div className="absolute bottom-0 left-0 h-px bg-white origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out w-full"></div>
@@ -152,7 +154,9 @@ const HoveringNavbar = () => {
               {/* RIGHT SIDE - Contact Info (Desktop Only) */}
               <div className="hidden lg:flex flex-1 flex-col justify-center pr-12 md:pr-20 text-right">
                 <div>
-                  <h2 className="text-white text-4xl md:text-5xl font-bold mb-12 tracking-wider">FIND US HERE</h2>
+                  <h2 className="text-white text-2xl md:text-3xl font-medium tracking-wide uppercase border-b border-white/30 pb-2 mb-6">
+                   FIND US HERE
+                  </h2>
                   <div className="space-y-6 text-white">
                     <div className="text-xl font-medium">Hagerstone International Pvt. Ltd.</div>
                     <div className="text-base leading-relaxed text-white/80">
@@ -184,9 +188,12 @@ const HoveringNavbar = () => {
                         className="text-white/70 hover:text-white transition-colors duration-300 p-2"
                         aria-label="X"
                       >
-                        <Twitter size={28} />
+                        <Facebook size={28} />
                       </a>
                     </div>
+                    <button className="mt-8 px-6 py-2 border border-white text-white uppercase tracking-wide hover:bg-white hover:text-black transition">
+                      Get in touch →
+                    </button>
                   </div>
                 </div>
               </div>
