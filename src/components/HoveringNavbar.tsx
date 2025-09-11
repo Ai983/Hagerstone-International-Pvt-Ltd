@@ -136,7 +136,7 @@ const HoveringNavbar = () => {
                       <h2 className="text-white text-4xl font-bold tracking-[0.3em] uppercase mb-4">
                         PAGES
                       </h2>
-                      <div className="w-40 h-0.5 bg-white"></div>
+                      <div className="w-48 h-0.5 bg-white"></div>
                     </div>
                     <nav>
                       <ul className="space-y-6 pl-4">
@@ -177,7 +177,7 @@ const HoveringNavbar = () => {
                       <h2 className="text-white text-4xl font-bold tracking-[0.3em] uppercase mb-4">
                         FIND US HERE
                       </h2>
-                      <div className="w-48 h-0.5 bg-white"></div>
+                      <div className="w-64 h-0.5 bg-white"></div>
                     </div>
                     <div className="space-y-8 text-white">
                       <div className="text-xl font-semibold">Hagerstone International Pvt. Ltd.</div>
