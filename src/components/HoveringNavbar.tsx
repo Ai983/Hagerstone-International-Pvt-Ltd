@@ -127,7 +127,7 @@ const HoveringNavbar = () => {
             </button>
 
             {/* Centered content container with margins */}
-            <div className="flex h-full w-full items-center justify-center px-12 py-32">
+            <div className="flex h-full w-full items-center justify-center px-12 py-48">
               <div className="max-w-6xl w-full">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-32">
                   {/* LEFT SIDE - Navigation Links */}
