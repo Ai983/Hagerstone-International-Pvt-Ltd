@@ -54,7 +54,7 @@ const HoveringNavbar = () => {
       >
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between relative z-10">
           {/* Logo & Branding */}
-          <div className="flex items-center gap-4 z-[120]">
+          <Link to="/" className="flex items-center gap-4 z-[120] hover:opacity-90 transition-opacity">
             <motion.img
               src="/logoo.png"
               alt="Logo"
@@ -72,7 +72,7 @@ const HoveringNavbar = () => {
               <div className={`text-lg font-bold ${menuOpen ? "text-white" : "text-primary"}`}>Hagerstone</div>
               <div className={`text-sm ${menuOpen ? "text-white/70" : "text-muted-foreground"}`}>International Pvt. Ltd.</div>
             </motion.div>
-          </div>
+          </Link>
 
           {/* Right: Theme + Hamburger */}
           <div className="flex items-center gap-3">
@@ -197,9 +197,13 @@ const HoveringNavbar = () => {
                             <Facebook size={18} className="sm:w-5 sm:h-5" />
                           </a>
                         </div>
-                        <button className="mt-4 sm:mt-5 md:mt-6 px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 border border-white text-white uppercase tracking-[0.1em] sm:tracking-[0.15em] text-xs font-medium hover:bg-white hover:text-black transition-all duration-300">
-                          <Link to="/contact">GET IN TOUCH →</Link>
-                        </button>
+                        <Link 
+                          to="/contact" 
+                          onClick={() => setMenuOpen(false)}
+                          className="inline-block mt-4 sm:mt-5 md:mt-6 px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 border border-white text-white uppercase tracking-[0.1em] sm:tracking-[0.15em] text-xs font-medium hover:bg-white hover:text-black transition-all duration-300"
+                        >
+                          GET IN TOUCH →
+                        </Link>
                       </div>
                     </div>
                   </div>
