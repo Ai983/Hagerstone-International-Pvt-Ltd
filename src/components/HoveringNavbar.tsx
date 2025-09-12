@@ -165,13 +165,13 @@ const HoveringNavbar = () => {
                     <div className="space-y-6 text-white">
                       <div className="text-lg font-semibold">Hagerstone International Pvt. Ltd.</div>
                       <div className="text-sm leading-relaxed text-white/80">
-                        No 21, 8th Cross Road, 24th Main Rd,<br />
-                        2nd Phase, J. P. Nagar, Bengaluru,<br />
-                        Karnataka 560078
+                        7th Floor, Max Hospital Building,<br />
+                        H.B Twin Tower, New Delhi,<br />
+                        Delhi 110034, India
                       </div>
                       <div className="space-y-2 text-white/90">
-                        <div className="text-sm">Email: global@hagerstone.com</div>
-                        <div className="text-sm">Phone: +91-XXXXXXXXXX</div>
+                        <div className="text-sm">Email: ea@hagerstone.com</div>
+                        <div className="text-sm">Phone: +91 88829 79328</div>
                       </div>
                       <div className="flex gap-6 mt-6">
                         <a 
@@ -197,7 +197,7 @@ const HoveringNavbar = () => {
                         </a>
                       </div>
                       <button className="mt-6 px-6 py-2 border border-white text-white uppercase tracking-[0.15em] text-xs font-medium hover:bg-white hover:text-black transition-all duration-300">
-                        GET IN TOUCH →
+                        <Link to = "/contact">GET IN TOUCH → </Link>
                       </button>
                     </div>
                   </div>
