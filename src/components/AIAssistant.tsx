@@ -22,7 +22,7 @@ const AIAssistant = () => {
     {
       id: "1",
       content:
-        "Hello! I'm StoneSense AI, your interior design assistant. Tell me your space, dimensions, style, budget, and timeline—I'll suggest a plan and next steps.",
+        "Hello! I'm SmartDesign AI, Design Assistant by Hagerstone. Tell me your space, dimensions, style, budget, and timeline—I'll suggest a plan and next steps.",
       isUser: false,
       timestamp: new Date(),
     },
