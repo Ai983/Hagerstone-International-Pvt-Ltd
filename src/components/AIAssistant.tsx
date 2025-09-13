@@ -141,8 +141,8 @@ const AIAssistant = () => {
             <span className="text-primary font-bold text-sm">S</span>
           </div>
           <div>
-            <h3 className="font-semibold text-primary-foreground">StoneSense AI</h3>
-            <p className="text-xs text-primary-foreground/80">Your Design Assistant</p>
+            <h3 className="font-semibold text-primary-foreground">SmartDesign AI</h3>
+            <p className="text-xs text-primary-foreground/80">Design Assistant by Hagerstone</p>
           </div>
         </div>
         <div className="flex space-x-1">
