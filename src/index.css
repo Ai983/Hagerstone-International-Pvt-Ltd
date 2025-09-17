@@ -1,0 +1,216 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Refined color palette - deep slate, warm gold, soft off-white */
+    --background: 0 0% 96%; /* Soft off-white */
+    --foreground: 220 15% 18%; /* Deep slate */
+
+    --card: 0 0% 98%;
+    --card-foreground: 220 15% 18%;
+
+    --popover: 0 0% 98%;
+    --popover-foreground: 220 15% 18%;
+
+    --primary: 220 15% 18%; /* Deep slate */
+    --primary-foreground: 0 0% 96%;
+
+    --secondary: 38 45% 80%; /* Light warm gold */
+    --secondary-foreground: 220 15% 18%;
+
+    --muted: 220 10% 90%;
+    --muted-foreground: 220 10% 45%;
+
+    --accent: 38 65% 60%; /* Warm gold */
+    --accent-foreground: 220 15% 18%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 13% 88%;
+    --input: 220 13% 88%;
+    --ring: 220 15% 18%;
+
+    /* Premium design tokens */
+    --luxury: 220 15% 18%; /* Deep slate */
+    --luxury-foreground: 0 0% 96%;
+    --gold: 38 65% 60%; /* Warm gold */
+    --gold-foreground: 220 15% 18%;
+
+    /* Independence Week tokens */
+    --saffron: 30 100% 60%;
+    --india-green: 120 90% 28%;
+    --chakra: 217 87% 30%;
+    --flag-white: 0 0% 100%;
+    
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(220 15% 18%), hsl(220 20% 25%));
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 98%), hsl(220 10% 92%));
+    --gradient-accent: linear-gradient(135deg, hsl(38 65% 60%), hsl(38 70% 65%));
+    
+    /* Shadows */
+    --shadow-luxury: 0 25px 50px -12px hsl(220 15% 18% / 0.25);
+    --shadow-card: 0 4px 6px -1px hsl(220 10% 45% / 0.1);
+    --shadow-hover: 0 20px 25px -5px hsl(220 15% 18% / 0.15);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 220 15% 18%;
+    --sidebar-primary: 220 15% 18%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 220 10% 90%;
+    --sidebar-accent-foreground: 220 15% 18%;
+    --sidebar-border: 220 13% 88%;
+    --sidebar-ring: 38 65% 60%;
+  }
+
+  .dark {
+    /* Dark theme - dark slate background, off-white text, gold accents */
+    --background: 220 15% 8%; /* Dark slate */
+    --foreground: 0 0% 94%; /* Off-white */
+
+    --card: 220 15% 10%;
+    --card-foreground: 0 0% 94%;
+
+    --popover: 220 15% 10%;
+    --popover-foreground: 0 0% 94%;
+
+    --primary: 0 0% 94%; /* Off-white */
+    --primary-foreground: 220 15% 8%;
+
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 0 0% 94%;
+
+    --muted: 220 15% 15%;
+    --muted-foreground: 220 10% 70%;
+
+    --accent: 38 65% 60%; /* Warm gold */
+    --accent-foreground: 220 15% 8%;
+
+    --destructive: 0 62.8% 45%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 38 65% 60%;
+
+    /* Premium design tokens for dark theme */
+    --luxury: 0 0% 94%;
+    --luxury-foreground: 220 15% 8%;
+    --gold: 38 65% 60%; /* Warm gold stays same */
+    --gold-foreground: 220 15% 8%;
+
+    /* Independence Week tokens */
+    --saffron: 30 100% 60%;
+    --india-green: 120 90% 28%;
+    --chakra: 217 87% 30%;
+    --flag-white: 0 0% 100%;
+    
+    /* Dark theme gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(220 15% 8%), hsl(220 15% 12%));
+    --gradient-card: linear-gradient(135deg, hsl(220 15% 10%), hsl(220 15% 12%));
+    --gradient-accent: linear-gradient(135deg, hsl(38 65% 60%), hsl(38 70% 65%));
+    
+    /* Dark theme shadows */
+    --shadow-luxury: 0 25px 50px -12px hsl(0 0% 0% / 0.4);
+    --shadow-card: 0 4px 6px -1px hsl(0 0% 0% / 0.3);
+    --shadow-hover: 0 20px 25px -5px hsl(0 0% 0% / 0.25);
+
+    --sidebar-background: 220 15% 10%;
+    --sidebar-foreground: 0 0% 94%;
+    --sidebar-primary: 38 65% 60%;
+    --sidebar-primary-foreground: 220 15% 8%;
+    --sidebar-accent: 220 15% 15%;
+    --sidebar-accent-foreground: 0 0% 94%;
+    --sidebar-border: 220 15% 20%;
+    --sidebar-ring: 38 65% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    cursor: none; /* Hide default cursor for custom cursor */
+  }
+
+  /* Custom cursor styles */
+  .custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: difference;
+    transition: all 0.15s ease-out;
+  }
+
+  .custom-cursor::before {
+    content: '🏢';
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.15s ease-out;
+  }
+
+  .custom-cursor.hover {
+    transform: scale(1.5);
+  }
+
+  .custom-cursor.hover::before {
+    filter: hue-rotate(45deg);
+  }
+
+  /* Interactive elements should show pointer cursor for accessibility */
+  button, a, [role="button"], input, textarea, select {
+    cursor: pointer;
+  }
+}
+
+@layer utilities {
+  .flag-wave {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: .35;
+    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" preserveAspectRatio="none"><rect width="120" height="40" fill="black"/><path fill="white" d="M0 12 C 15 4, 30 20, 45 12 S 75 20, 90 12 S 105 4, 120 12 V28 C 105 36, 90 20, 75 28 S 45 20, 30 28 S 15 36, 0 28 Z"/></svg>');
+    mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 40" preserveAspectRatio="none"><rect width="120" height="40" fill="black"/><path fill="white" d="M0 12 C 15 4, 30 20, 45 12 S 75 20, 90 12 S 105 4, 120 12 V28 C 105 36, 90 20, 75 28 S 45 20, 30 28 S 15 36, 0 28 Z"/></svg>');
+    -webkit-mask-size: 600px 100%;
+    mask-size: 600px 100%;
+    -webkit-mask-repeat: repeat-x;
+    mask-repeat: repeat-x;
+  }
+  .flag-wave::before {
+    content: "";
+    position: absolute;
+    top: 0; left: -100%;
+    width: 300%;
+    height: 100%;
+    background: linear-gradient(180deg,
+      hsl(var(--saffron)) 0 33%,
+      hsl(var(--flag-white)) 33% 66%,
+      hsl(var(--india-green)) 66% 100%
+    );
+    animation: flag-pan 16s linear infinite;
+    filter: saturate(1.1);
+  }
+  @keyframes flag-pan {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-33.333%); }
+  }
+}
