@@ -20,6 +20,8 @@ import FindYourStyle from "./pages/FindYourStyle";
 import NotFound from "./pages/NotFound";
 import IndependenceSplash from "./components/IndependenceSplash";
 import DynamicLoader from "./components/DynamicLoader";
+import EstimatorFlow from "./components/estimator/EstimatorFlow";
+
 
  
 const queryClient = new QueryClient();
