@@ -10,111 +10,11 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "12.2.12 (cd3cf9e)"
+    PostgrestVersion: "13.0.5"
   }
   public: {
     Tables: {
-      lead_events: {
-        Row: {
-          created_at: string
-          event_payload: Json | null
-          event_type: string
-          id: string
-          lead_id: string
-        }
-        Insert: {
-          created_at?: string
-          event_payload?: Json | null
-          event_type: string
-          id?: string
-          lead_id: string
-        }
-        Update: {
-          created_at?: string
-          event_payload?: Json | null
-          event_type?: string
-          id?: string
-          lead_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "lead_events_lead_id_fkey"
-            columns: ["lead_id"]
-            isOneToOne: false
-            referencedRelation: "leads"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      leads: {
-        Row: {
-          company: string | null
-          consent_marketing: boolean | null
-          consent_timestamp: string | null
-          created_at: string
-          device: string | null
-          email: string
-          id: string
-          industry: string | null
-          name: string | null
-          page_path: string | null
-          phone: string | null
-          quiz_answers: Json | null
-          referrer: string | null
-          role: string | null
-          style_result: string | null
-          team_size: number | null
-          timezone: string | null
-          utm_campaign: string | null
-          utm_medium: string | null
-          utm_source: string | null
-        }
-        Insert: {
-          company?: string | null
-          consent_marketing?: boolean | null
-          consent_timestamp?: string | null
-          created_at?: string
-          device?: string | null
-          email: string
-          id?: string
-          industry?: string | null
-          name?: string | null
-          page_path?: string | null
-          phone?: string | null
-          quiz_answers?: Json | null
-          referrer?: string | null
-          role?: string | null
-          style_result?: string | null
-          team_size?: number | null
-          timezone?: string | null
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-        }
-        Update: {
-          company?: string | null
-          consent_marketing?: boolean | null
-          consent_timestamp?: string | null
-          created_at?: string
-          device?: string | null
-          email?: string
-          id?: string
-          industry?: string | null
-          name?: string | null
-          page_path?: string | null
-          phone?: string | null
-          quiz_answers?: Json | null
-          referrer?: string | null
-          role?: string | null
-          style_result?: string | null
-          team_size?: number | null
-          timezone?: string | null
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Views: {
       [_ in never]: never
