@@ -53,7 +53,7 @@ export const projects: ProjectData[] = [
     ]
   },
   {
-    id: "theon",
+    id: "Andritz",
     title: "Theon Life Sciences",
     client: "Hagerstone International Pvt. Ltd.",
     year: "2025",
