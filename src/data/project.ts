@@ -54,6 +54,6 @@ export const projects: ProjectData[] = [
   }
 ];
 
-// Helper
+// Helper function to get project by ID
 export const getProjectById = (id: string) =>
   projects.find((p) => p.id === id);
